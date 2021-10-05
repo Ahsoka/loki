@@ -1,7 +1,10 @@
 import argparse
 import pathlib
 import tqdm
+import dotenv
 import os
+
+dotenv.load_dotenv()
 
 def move(original: pathlib.Path, new: pathlib.Path, chunk_size: int) -> None:
     with original.open(mode='rb') as old_file, new.open(mode='wb') as new_file, \
