@@ -1,2 +1,5 @@
 # VSCode config files
 .vscode
+
+# Program config file
+.env
