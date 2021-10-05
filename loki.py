@@ -61,3 +61,13 @@ parser.add_argument(
 )
 
 config = parser.parse_args()
+
+class StoreAndStdout(io.TextIOBase):
+    def write(self, text):
+        print(text)
+        if not hasattr('self', 'the_text'):
+            self._text = ''
+        self._text += text
+
+    def read(self):
+        return self._text
