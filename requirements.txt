@@ -1,2 +1,2 @@
 tqdm
-dotenv
+python-dotenv
