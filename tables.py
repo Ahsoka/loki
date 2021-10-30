@@ -23,7 +23,6 @@ class PermStorage:
     })
     model_number: str = field(metadata={'sa': Column(String, nullable=False)})
     capacity_tb: float = field(metadata={'sa': Column(Float, nullable=False)})
-    voltage: int = field(metadata={'sa': Column(SmallInteger, nullable=False)})
     current: float = field(metadata={'sa': Column(Float, nullable=False)})
     storage_type: StorageType = field(
         metadata={'sa': Column(Enum(StorageType), nullable=False)}
@@ -33,6 +32,10 @@ class PermStorage:
     )
     form_factor: FormFactor = field(
         metadata={'sa': Column(Enum(FormFactor), nullable=False)}
+    )
+    voltage: int = field(
+        metadata={'sa': Column(SmallInteger, nullable=False)},
+        default=5
     )
     external_link: Union[str, None] = field(
         default=None, metadata={'sa': Column(String)}
