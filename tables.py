@@ -18,9 +18,6 @@ class PermStorage:
         init=False,
         metadata={'sa': Column(SmallInteger, primary_key=True)}
     )
-    purchase_id: int = field(metadata={
-        'sa': Column(SmallInteger, ForeignKey('purchases.id'))
-    })
     manufacturer: Manufacturer = field(metadata={
         'sa': Column(Enum(Manufacturer), nullable=False)
     })
@@ -42,6 +39,10 @@ class PermStorage:
     )
     notes: Union[str, None] = field(
         default=None, metadata={'sa': Column(String)}
+    )
+    purchase_id: int = field(
+        default=None,
+        metadata={'sa': Column(SmallInteger, ForeignKey('purchases.id'))}
     )
 
 
