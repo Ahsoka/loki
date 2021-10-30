@@ -1,6 +1,11 @@
 from enum import Enum, auto
 
 
+class Usage(Enum):
+    permanent = auto()
+    temporary = auto()
+
+
 class Manufacturer(Enum):
     seagate = auto()
     samsung = auto()

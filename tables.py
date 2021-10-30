@@ -1,5 +1,5 @@
 from sqlalchemy import Column, SmallInteger, Enum, String, Float, ForeignKey
-from enums import Contributors, Manufacturer, StorageType, FormFactor
+from enums import Contributors, Manufacturer, StorageType, FormFactor, Usage
 from sqlalchemy.orm.decl_api import registry
 from dataclasses import dataclass, field
 from typing import Union
@@ -9,8 +9,8 @@ mapper = registry()
 
 @mapper.mapped
 @dataclass
-class PermStorage:
-    __tablename__ = 'permanent-storage'
+class Storage:
+    __tablename__ = 'storage'
 
     __sa_dataclass_metadata_key__ = 'sa'
 
@@ -32,6 +32,10 @@ class PermStorage:
     )
     form_factor: FormFactor = field(
         metadata={'sa': Column(Enum(FormFactor), nullable=False)}
+    )
+    usage: Usage = field(
+        metadata={'sa': Column(Enum(Usage), nullable=False)},
+        default=Usage.permanent
     )
     voltage: int = field(
         metadata={'sa': Column(SmallInteger, nullable=False)},
