@@ -23,7 +23,7 @@ class PermStorage:
     })
     model_number: str = field(metadata={'sa': Column(String, nullable=False)})
     capacity_tb: float = field(metadata={'sa': Column(Float, nullable=False)})
-    current: float = field(metadata={'sa': Column(Float, nullable=False)})
+    ampere: float = field(metadata={'sa': Column(Float, nullable=False)})
     storage_type: StorageType = field(
         metadata={'sa': Column(Enum(StorageType), nullable=False)}
     )
