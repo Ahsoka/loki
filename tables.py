@@ -37,9 +37,7 @@ class PermStorage:
         metadata={'sa': Column(SmallInteger, nullable=False)},
         default=5
     )
-    external_link: Union[str, None] = field(
-        default=None, metadata={'sa': Column(String)}
-    )
+    link: Union[str, None] = field(default=None, metadata={'sa': Column(String)})
     notes: Union[str, None] = field(
         default=None, metadata={'sa': Column(String)}
     )
