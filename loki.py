@@ -1,7 +1,8 @@
+import subprocess
 import argparse
 import pathlib
-import tqdm
 import dotenv
+import tqdm
 import os
 
 dotenv.load_dotenv()
@@ -75,3 +76,14 @@ class StoreAndStdout(io.TextIOBase):
 chia_plotter = pathlib.Path('chia_plot')
 if not chia_plotter.exists():
     raise FileNotFoundError('Could not find Chia Plotter binary.')
+
+stream = StoreAndStdout()
+for _ in range(config.count):
+    plot = subprocess.Popen(
+        (f"/.{chia_plotter}, -t {config.temp_1} -2 {config.temp_2} -d {config.temp_3} "
+        f"-t {config.threads} -p {config.poolkey} -f {config.farmerkey}").split(),
+        stdout=stream,
+        stderr=stream,
+        text=True
+    )
+    plot.wait()
