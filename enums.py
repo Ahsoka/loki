@@ -13,6 +13,7 @@ class StorageType(Enum):
     hdd = auto()
     ssd = auto()
     hybrid = auto()
+    ram = auto()
 
 
 class FormFactor(Enum):
