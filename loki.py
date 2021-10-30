@@ -65,7 +65,7 @@ config = parser.parse_args()
 class StoreAndStdout(io.TextIOBase):
     def write(self, text):
         print(text)
-        if not hasattr('self', 'the_text'):
+        if not hasattr('self', '_text'):
             self._text = ''
         self._text += text
 
