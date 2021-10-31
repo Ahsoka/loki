@@ -54,6 +54,8 @@ class Storage:
 class Purchase:
     __tablename__ = 'purchases'
 
+    __sa_dataclass_metadata_key__ = 'sa'
+
     id: int = field(
         init=False,
         metadata={'sa': Column(SmallInteger, primary_key=True)}
