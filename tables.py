@@ -72,6 +72,8 @@ class Purchase:
 class Buyer:
     __tablename__ = 'buyers'
 
+    __sa_dataclass_metadata_key__ = 'sa'
+
     name: Contributors = field(metadata={'sa': Column(Enum(Contributors), primary_key=True)})
     purchase_id: int = field(metadata={
         'sa': Column(SmallInteger, ForeignKey(Purchase.id), primary_key=True)
