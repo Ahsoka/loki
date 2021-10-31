@@ -68,7 +68,7 @@ class Purchase:
 @mapper.mapped
 @dataclass
 class Buyer:
-    __tablename__ = 'buyer'
+    __tablename__ = 'buyers'
 
     name: Contributors = field(metadata={'sa': Column(Enum(Contributors), primary_key=True)})
     purchase_id: int = field(metadata={
