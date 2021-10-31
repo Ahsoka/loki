@@ -27,12 +27,10 @@ class Storage:
     storage_type: StorageType = field(
         metadata={'sa': Column(Enum(StorageType), nullable=False)}
     )
-    rpm: int = field(
-        metadata={'sa': Column(SmallInteger, nullable=False)}
-    )
     form_factor: FormFactor = field(
         metadata={'sa': Column(Enum(FormFactor), nullable=False)}
     )
+    rpm: int = field(metadata={'sa': Column(SmallInteger)}, default=None)
     usage: Usage = field(
         metadata={'sa': Column(Enum(Usage), nullable=False)},
         default=Usage.permanent
