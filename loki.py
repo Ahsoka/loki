@@ -1,9 +1,12 @@
 import subprocess
 import argparse
+import datetime
 import pathlib
 import dotenv
 import tqdm
 import os
+import io
+import re
 
 dotenv.load_dotenv()
 
@@ -79,6 +82,7 @@ if not chia_plotter.exists():
 
 stream = StoreAndStdout()
 for _ in range(config.count):
+    current_date = datetime.date.today()
     plot = subprocess.Popen(
         (f"/.{chia_plotter}, -t {config.temp_1} -2 {config.temp_2} -d {config.temp_3} "
         f"-t {config.threads} -p {config.poolkey} -f {config.farmerkey}").split(),
@@ -87,3 +91,12 @@ for _ in range(config.count):
         text=True
     )
     plot.wait()
+
+    plot_name = re.search(
+        fr"plot-k32-{format(current_date, '%Y-%m-%d')}-\d{{2}}-\d{{2}}-\w{{64}}",
+        stream.read()
+    )
+    if plot_name:
+        plot_name = plot_name[0]
+    else:
+        raise RuntimeError('Could not determine the name of the plot that was just created.')
