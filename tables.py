@@ -1,4 +1,4 @@
-from sqlalchemy import Column, SmallInteger, Enum, String, Float, ForeignKey
+from sqlalchemy import Column, SmallInteger, Enum, String, Float, ForeignKey, Integer
 from enums import Contributors, Manufacturer, StorageType, FormFactor, Usage
 from sqlalchemy.orm.decl_api import registry
 from dataclasses import dataclass, field
@@ -12,11 +12,14 @@ mapper = registry()
 class Storage:
     __tablename__ = 'storage'
 
+    __table_args__ = {'sqlite_autoincrement': True} # Apparently SmallInt doesn't work with this parameter
+    # make issue on sqlalchemy docs maybe?
+
     __sa_dataclass_metadata_key__ = 'sa'
 
     id: int = field(
         init=False,
-        metadata={'sa': Column(SmallInteger, primary_key=True)}
+        metadata={'sa': Column(Integer, primary_key=True)}
     )
     manufacturer: Manufacturer = field(metadata={
         'sa': Column(Enum(Manufacturer), nullable=False)
@@ -54,11 +57,13 @@ class Storage:
 class Purchase:
     __tablename__ = 'purchases'
 
+    __table_args__ = {'sqlite_autoincrement': True}
+
     __sa_dataclass_metadata_key__ = 'sa'
 
     id: int = field(
         init=False,
-        metadata={'sa': Column(SmallInteger, primary_key=True)}
+        metadata={'sa': Column(Integer, primary_key=True)}
     )
     name: str = field(metadata={'sa': Column(String, nullable=False)})
     base_price: float = field(metadata={'sa': Column(Float, nullable=False)})
