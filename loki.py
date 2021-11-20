@@ -1,4 +1,5 @@
 import subprocess
+import threading
 import argparse
 import datetime
 import pathlib
@@ -10,7 +11,7 @@ import re
 
 dotenv.load_dotenv()
 
-def move(original: pathlib.Path, new: pathlib.Path, chunk_size: int) -> None:
+def move(original: pathlib.Path, new: pathlib.Path, chunk_size: int = 65_536) -> None:
     with original.open(mode='rb') as old_file, new.open(mode='wb') as new_file, \
     tqdm.tqdm(total=original.stat().st_size, unit_scale=True, unit='b') as progress:
         for chunk in iter(lambda: old_file.read(chunk_size), b''):
@@ -100,3 +101,13 @@ for _ in range(config.count):
         plot_name = plot_name[0]
     else:
         raise RuntimeError('Could not determine the name of the plot that was just created.')
+
+    thread = threading.Thread(
+        target=move,
+        args=(
+            config.temp_3 / plot_name,
+            config.finaldir / plot_name
+        )
+    )
+    thread.start()
+
