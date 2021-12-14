@@ -89,7 +89,7 @@ stream = StoreAndStdout(sys.stdout)
 for _ in range(config.count):
     current_date = datetime.date.today()
     plot = subprocess.Popen(
-        (f"/.{chia_plotter}, -t {config.temp_1} -2 {config.temp_2} -d {config.temp_3} "
+        (f"/.{chia_plotter} -t {config.temp_1} -2 {config.temp_2} -d {config.temp_3} "
         f"-t {config.threads} -p {config.poolkey} -f {config.farmerkey}").split(),
         stdout=stream,
         stderr=stream,
