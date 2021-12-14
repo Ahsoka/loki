@@ -23,6 +23,7 @@ def move(original: pathlib.Path, new: pathlib.Path, chunk_size: int = 65_536) ->
 parser = argparse.ArgumentParser(description='Use this configure the Chia Plotting process.')
 parser.add_argument(
     'count',
+    type=int,
     help='Number of plots to create'
 )
 parser.add_argument(
