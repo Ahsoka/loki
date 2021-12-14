@@ -78,7 +78,7 @@ class StoreAndStdout(io.TextIOBase):
     def read(self):
         return self._text
 
-chia_plotter = pathlib.Path('chia_plot')
+chia_plotter = pathlib.Path('chia_plot').absolute()
 if not chia_plotter.exists():
     raise FileNotFoundError('Could not find Chia Plotter binary.')
 
