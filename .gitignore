@@ -3,3 +3,6 @@
 
 # Program config file
 .env
+
+# Python Bytecode
+__pycache__
