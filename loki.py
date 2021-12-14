@@ -5,6 +5,7 @@ import datetime
 import pathlib
 import dotenv
 import tqdm
+import sys
 import os
 import io
 import re
@@ -68,12 +69,14 @@ parser.add_argument(
 
 config = parser.parse_args()
 
-class StoreAndStdout(io.TextIOBase):
+class StoreAndStdout(io.TextIOWrapper):
     def write(self, text):
-        print(text)
+        with open('.log', 'a') as log:
+            log.write(text)
         if not hasattr('self', '_text'):
             self._text = ''
         self._text += text
+        super().write(text)
 
     def read(self):
         return self._text
@@ -82,7 +85,7 @@ chia_plotter = pathlib.Path('chia_plot').absolute()
 if not chia_plotter.exists():
     raise FileNotFoundError('Could not find Chia Plotter binary.')
 
-stream = StoreAndStdout()
+stream = StoreAndStdout(sys.stdout)
 for _ in range(config.count):
     current_date = datetime.date.today()
     plot = subprocess.Popen(
