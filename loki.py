@@ -39,7 +39,7 @@ parser.add_argument(
 config = parser.parse_args()
 
 logs = ''
-plot_name = None
+plot_names = []
 progress_bar = None
 final_dir = None
 final_dir_re = re.compile(r"Final Directory: (~?/?([-\w ]+/)+)")
@@ -51,21 +51,22 @@ try:
             if search := final_dir_re.search(line):
                 final_dir = search[1]
 
-        if plot_name is None:
+        if line.startswith('Plot Name:'):
             current_date = datetime.date.today()
             plot_name = re.search(
                 fr"plot-k32-{format(current_date, '%Y-%m-%d')}-\d{{2}}-\d{{2}}-\w{{64}}", line
             )
             if plot_name:
-                plot_name = plot_name[0]
+                plot_names.append(plot_name[0])
 
         # This indicates that plot is finised being created and has been moved to the final directory
         if line.startswith('Copy to'):
-            if plot_name is None:
+            if len(plot_names) == 0:
                 raise FileNotFoundError('Plot name could not be identified')
             elif final_dir is None:
                 raise FileNotFoundError('Final directory could not be identified')
-            plot = pathlib.Path(final_dir) / plot_name
+            plot = pathlib.Path(final_dir) / plot_names[0]
+            plot_names.pop(0)
             if not plot.exists():
                 raise FileNotFoundError(f'Plot not found in expected location: {plot}')
 
@@ -77,9 +78,6 @@ try:
                 config.chunk_size
             ))
             thread.start()
-
-            plot_name = None
-            final_dir = None
 finally:
     with config.log_file.open(mode='a') as file:
         file.write(logs)
