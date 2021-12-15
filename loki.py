@@ -42,7 +42,7 @@ logs = ''
 plot_name = None
 progress_bar = None
 final_dir = None
-final_dir_re = re.compile(r"Final Directory: ((/[-\w ]+)+)")
+final_dir_re = re.compile(r"Final Directory: ~?/?(([-\w ]+/)+)")
 try:
     for line in sys.stdin:
         logs += line
