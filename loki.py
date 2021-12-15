@@ -59,7 +59,7 @@ try:
             if plot_name:
                 plot_names.append(plot_name[0])
 
-        # This indicates that plot is finised being created and has been moved to the final directory
+        # This indicates the plot is finished being created and has been moved to the final directory
         if line.startswith('Copy to'):
             if len(plot_names) == 0:
                 raise FileNotFoundError('Plot name could not be identified')
