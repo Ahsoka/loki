@@ -1,7 +1,8 @@
-import argparse
 import threading
+import argparse
 import datetime
 import pathlib
+import inspect
 import time
 import tqdm
 import sys
@@ -29,6 +30,13 @@ parser.add_argument(
     help='Location of the log file.',
     default='chia.log',
     dest='log_file'
+)
+parser.add_argument(
+    '--chunk-size',
+    type=int,
+    help='Chunk size used when transferring plots.',
+    dest='chunk_size',
+    default=dict(inspect.signature(move).parameters.items())['chunk_size']
 )
 config = parser.parse_args()
 
@@ -64,7 +72,12 @@ try:
                 raise FileNotFoundError(f'Plot not found in expected location: {plot}')
 
             progress_bar = tqdm.tqdm(total=plot.stat().st_size, unit_scale=True, unit='b')
-            thread = threading.Thread(target=move, args=(plot, config.location, progress_bar))
+            thread = threading.Thread(target=move, args=(
+                plot,
+                config.location,
+                progress_bar,
+                config.chunk_size
+            ))
             thread.start()
 
             plot_name = None
