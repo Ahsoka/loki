@@ -34,7 +34,7 @@ parser.add_argument(
     type=int,
     help='Chunk size used when transferring plots.',
     dest='chunk_size',
-    default=dict(inspect.signature(move).parameters.items())['chunk_size']
+    default=dict(inspect.signature(move).parameters.items())['chunk_size'].default
 )
 config = parser.parse_args()
 
