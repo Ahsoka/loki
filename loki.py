@@ -3,7 +3,6 @@ import argparse
 import datetime
 import pathlib
 import inspect
-import time
 import tqdm
 import sys
 import re
@@ -13,7 +12,6 @@ def move(original: pathlib.Path, new: pathlib.Path, progress: tqdm.tqdm, chunk_s
         for chunk in iter(lambda: old_file.read(chunk_size), b''):
             new_file.write(chunk)
             progress.update(len(chunk))
-            time.sleep(2)
 
     original.unlink()
     progress.close()
