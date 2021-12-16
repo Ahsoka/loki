@@ -65,7 +65,7 @@ try:
                 raise FileNotFoundError('Plot name could not be identified')
             elif final_dir is None:
                 raise FileNotFoundError('Final directory could not be identified')
-            plot = pathlib.Path(final_dir) / plot_names[0]
+            plot = pathlib.Path(final_dir) / f"{plot_names[0]}.plot"
             plot_names.pop(0)
             if not plot.exists():
                 raise FileNotFoundError(f'Plot not found in expected location: {plot}')
